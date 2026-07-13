@@ -14,6 +14,7 @@ import {
 } from '@mui/material';
 import { Save as SaveIcon, ArrowBack as ArrowBackIcon } from '@mui/icons-material';
 import { useCreateCliente, useCliente, useUpdateCliente } from '../hooks/useQueries';
+import DireccionMapaSelector from '../components/DireccionMapaSelector';
 
 const clienteSchema = z.object({
   nombre: z.string().min(1, 'El nombre es obligatorio.').max(100, 'El nombre no debe exceder 100 caracteres.'),
@@ -216,12 +217,9 @@ const ClienteFormPage: React.FC = () => {
                 name="direccion"
                 control={control}
                 render={({ field }) => (
-                  <TextField
-                    {...field}
-                    label="Dirección Completa"
-                    fullWidth
-                    multiline
-                    rows={3}
+                  <DireccionMapaSelector
+                    value={field.value || ''}
+                    onChange={field.onChange}
                     error={!!errors.direccion}
                     helperText={errors.direccion?.message}
                   />
