@@ -93,8 +93,8 @@ const ClientesList: React.FC = () => {
             </Typography>
           </Box>
         ) : (
-          <TableContainer>
-            <Table>
+          <TableContainer sx={{ border: '1px solid', borderColor: 'divider', borderRadius: '8px' }}>
+            <Table sx={{ minWidth: 700 }}>
               <TableHead>
                 <TableRow>
                   <TableCell sx={{ fontWeight: 700 }}>Nombre Completo</TableCell>

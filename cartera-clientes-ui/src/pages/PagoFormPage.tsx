@@ -20,7 +20,7 @@ import { formatCurrency, formatDateForInput } from '../utils/format';
 
 const pagoSchema = z.object({
   ventaId: z.number().min(1, 'La venta es obligatoria.'),
-  montoPago: z.number().positive('El monto del pago debe ser mayor que cero.'),
+  montoPago: z.coerce.number().positive('El monto del pago debe ser mayor que cero.'),
   fechaPago: z.string().min(1, 'La fecha de pago es obligatoria.'),
   formaPago: z.string().max(30, 'La forma de pago no debe exceder 30 caracteres.').optional().or(z.literal('')),
   referencia: z.string().max(100, 'La referencia no debe exceder 100 caracteres.').optional().or(z.literal('')),
@@ -48,10 +48,10 @@ const PagoFormPage: React.FC = () => {
     setError,
     formState: { errors },
   } = useForm<PagoFormValues>({
-    resolver: zodResolver(pagoSchema),
+    resolver: zodResolver(pagoSchema) as any,
     defaultValues: {
       ventaId: queryVentaId ? parseInt(queryVentaId) : undefined as any,
-      montoPago: 0,
+      montoPago: '' as any,
       fechaPago: todayStr,
       formaPago: 'EFECTIVO',
       referencia: '',
@@ -218,7 +218,10 @@ const PagoFormPage: React.FC = () => {
                           startAdornment: <InputAdornment position="start">$</InputAdornment>,
                         }
                       }}
-                      onChange={(e) => field.onChange(parseFloat(e.target.value) || 0)}
+                      onChange={(e) => {
+                        const val = e.target.value;
+                        field.onChange(val === '' ? '' : parseFloat(val));
+                      }}
                     />
                   )}
                 />

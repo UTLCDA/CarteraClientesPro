@@ -21,8 +21,11 @@ import { formatCurrency, formatDateForInput } from '../utils/format';
 const ventaSchema = z.object({
   clienteId: z.number().min(1, 'El cliente es obligatorio.'),
   descripcionProducto: z.string().min(1, 'La descripción del producto es obligatoria.').max(250, 'La descripción no debe exceder 250 caracteres.'),
-  cantidad: z.number().int().positive('La cantidad debe ser mayor que cero.'),
-  precioUnitario: z.number().positive('El precio unitario debe ser mayor que cero.'),
+  cantidad: z.coerce.number()
+    .int('La cantidad debe ser un número entero.')
+    .positive('La cantidad debe ser mayor que cero.'),
+  precioUnitario: z.coerce.number()
+    .positive('El precio unitario debe ser mayor que cero.'),
   fechaInicioDeuda: z.string().min(1, 'La fecha de inicio de la deuda es obligatoria.'),
   fechaLimitePago: z.string().optional().or(z.literal('')),
   observaciones: z.string().max(500, 'Las observaciones no deben exceder 500 caracteres.').optional().or(z.literal('')),
@@ -57,12 +60,12 @@ const VentaFormPage: React.FC = () => {
     watch,
     formState: { errors },
   } = useForm<VentaFormValues>({
-    resolver: zodResolver(ventaSchema),
+    resolver: zodResolver(ventaSchema) as any,
     defaultValues: {
       clienteId: queryClienteId ? parseInt(queryClienteId) : undefined as any,
       descripcionProducto: '',
-      cantidad: 1,
-      precioUnitario: 0,
+      cantidad: '' as any,
+      precioUnitario: '' as any,
       fechaInicioDeuda: todayStr,
       fechaLimitePago: '',
       observaciones: '',
@@ -189,7 +192,10 @@ const VentaFormPage: React.FC = () => {
                       fullWidth
                       error={!!errors.cantidad}
                       helperText={errors.cantidad?.message}
-                      onChange={(e) => field.onChange(parseInt(e.target.value) || 0)}
+                      onChange={(e) => {
+                        const val = e.target.value;
+                        field.onChange(val === '' ? '' : parseInt(val, 10));
+                      }}
                     />
                   )}
                 />
@@ -212,7 +218,10 @@ const VentaFormPage: React.FC = () => {
                           startAdornment: <InputAdornment position="start">$</InputAdornment>,
                         }
                       }}
-                      onChange={(e) => field.onChange(parseFloat(e.target.value) || 0)}
+                      onChange={(e) => {
+                        const val = e.target.value;
+                        field.onChange(val === '' ? '' : parseFloat(val));
+                      }}
                     />
                   )}
                 />

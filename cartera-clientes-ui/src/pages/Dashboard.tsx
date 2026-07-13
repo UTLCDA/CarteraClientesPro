@@ -185,7 +185,7 @@ const Dashboard: React.FC = () => {
             </Box>
           ) : (
             <TableContainer sx={{ maxHeight: 350 }}>
-              <Table stickyHeader size="small">
+              <Table stickyHeader size="small" sx={{ minWidth: { xs: 550, md: '100%' } }}>
                 <TableHead>
                   <TableRow>
                     <TableCell sx={{ fontWeight: 700 }}>Cliente</TableCell>
@@ -260,12 +260,12 @@ const Dashboard: React.FC = () => {
                     }}
                     onClick={() => navigate(`/clientes/${cliente.clienteId}`)}
                   >
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
-                      <Avatar sx={{ bgcolor: 'rgba(99, 102, 241, 0.08)', color: 'primary.main', fontWeight: 700, fontSize: '0.85rem', width: 36, height: 36 }}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, minWidth: 0 }}>
+                      <Avatar sx={{ bgcolor: 'rgba(99, 102, 241, 0.08)', color: 'primary.main', fontWeight: 700, fontSize: '0.85rem', width: 36, height: 36, flexShrink: 0 }}>
                         {cliente.nombre.substring(0, 1)}
                       </Avatar>
-                      <Box>
-                        <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>
+                      <Box sx={{ minWidth: 0 }}>
+                        <Typography variant="subtitle2" sx={{ fontWeight: 700 }} noWrap>
                           {`${cliente.nombre} ${cliente.apellidoPaterno || ''}`.trim()}
                         </Typography>
                         <Typography variant="caption" color="text.secondary">
@@ -309,7 +309,7 @@ const Dashboard: React.FC = () => {
           </Box>
         ) : (
           <TableContainer sx={{ maxHeight: 350 }}>
-            <Table stickyHeader size="small">
+            <Table stickyHeader size="small" sx={{ minWidth: { xs: 650, md: '100%' } }}>
               <TableHead>
                 <TableRow>
                   <TableCell sx={{ fontWeight: 700 }}>Cliente</TableCell>
