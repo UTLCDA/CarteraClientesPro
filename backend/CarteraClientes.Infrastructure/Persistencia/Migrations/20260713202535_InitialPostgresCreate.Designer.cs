@@ -3,76 +3,76 @@ using System;
 using CarteraClientes.Infrastructure.Persistencia;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
 namespace CarteraClientes.Infrastructure.Persistencia.Migrations
 {
     [DbContext(typeof(CarteraClientesDbContext))]
-    [Migration("20260713174644_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20260713202535_InitialPostgresCreate")]
+    partial class InitialPostgresCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "10.0.9")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+                .HasAnnotation("ProductVersion", "9.0.2")
+                .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+            NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
             modelBuilder.Entity("CarteraClientes.Domain.Entities.Cliente", b =>
                 {
                     b.Property<int>("ClienteId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ClienteId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ClienteId"));
 
                     b.Property<bool>("Activo")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
+                        .HasColumnType("boolean")
                         .HasDefaultValue(true);
 
                     b.Property<string>("ApellidoMaterno")
                         .HasMaxLength(80)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(80)");
+                        .HasColumnType("character varying(80)");
 
                     b.Property<string>("ApellidoPaterno")
                         .HasMaxLength(80)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(80)");
+                        .HasColumnType("character varying(80)");
 
                     b.Property<string>("Correo")
                         .HasMaxLength(150)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(150)");
+                        .HasColumnType("character varying(150)");
 
                     b.Property<string>("Direccion")
                         .HasMaxLength(250)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(250)");
+                        .HasColumnType("character varying(250)");
 
                     b.Property<DateTime>("FechaRegistro")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
-                        .HasDefaultValueSql("GETDATE()");
+                        .HasColumnType("timestamp without time zone")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
                         .HasMaxLength(100)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(100)");
+                        .HasColumnType("character varying(100)");
 
                     b.Property<string>("Telefono")
                         .HasMaxLength(20)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(20)");
+                        .HasColumnType("character varying(20)");
 
                     b.HasKey("ClienteId");
 
@@ -97,19 +97,19 @@ namespace CarteraClientes.Infrastructure.Persistencia.Migrations
                 {
                     b.Property<int>("MovimientoId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MovimientoId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("MovimientoId"));
 
                     b.Property<string>("Descripcion")
                         .HasMaxLength(250)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(250)");
+                        .HasColumnType("character varying(250)");
 
                     b.Property<DateTime>("FechaMovimiento")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
-                        .HasDefaultValueSql("GETDATE()");
+                        .HasColumnType("timestamp without time zone")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                     b.Property<decimal>("Monto")
                         .HasColumnType("decimal(12,2)");
@@ -118,10 +118,10 @@ namespace CarteraClientes.Infrastructure.Persistencia.Migrations
                         .IsRequired()
                         .HasMaxLength(20)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(20)");
+                        .HasColumnType("character varying(20)");
 
                     b.Property<int>("VentaId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.HasKey("MovimientoId");
 
@@ -154,19 +154,19 @@ namespace CarteraClientes.Infrastructure.Persistencia.Migrations
                 {
                     b.Property<int>("PagoId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PagoId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("PagoId"));
 
                     b.Property<DateTime>("FechaPago")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
-                        .HasDefaultValueSql("GETDATE()");
+                        .HasColumnType("timestamp without time zone")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                     b.Property<string>("FormaPago")
                         .HasMaxLength(30)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(30)");
+                        .HasColumnType("character varying(30)");
 
                     b.Property<decimal>("MontoPago")
                         .HasColumnType("decimal(12,2)");
@@ -174,15 +174,15 @@ namespace CarteraClientes.Infrastructure.Persistencia.Migrations
                     b.Property<string>("Observaciones")
                         .HasMaxLength(250)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(250)");
+                        .HasColumnType("character varying(250)");
 
                     b.Property<string>("Referencia")
                         .HasMaxLength(100)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(100)");
+                        .HasColumnType("character varying(100)");
 
                     b.Property<int>("VentaId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.HasKey("PagoId");
 
@@ -206,30 +206,30 @@ namespace CarteraClientes.Infrastructure.Persistencia.Migrations
                 {
                     b.Property<int>("VentaId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("VentaId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("VentaId"));
 
                     b.Property<int>("Cantidad")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasDefaultValue(1);
 
                     b.Property<int>("ClienteId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<string>("DescripcionProducto")
                         .IsRequired()
                         .HasMaxLength(250)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(250)");
+                        .HasColumnType("character varying(250)");
 
                     b.Property<string>("Estatus")
                         .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasMaxLength(20)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(20)")
+                        .HasColumnType("character varying(20)")
                         .HasDefaultValue("PENDIENTE");
 
                     b.Property<DateTime>("FechaInicioDeuda")
@@ -240,8 +240,8 @@ namespace CarteraClientes.Infrastructure.Persistencia.Migrations
 
                     b.Property<DateTime>("FechaRegistro")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
-                        .HasDefaultValueSql("GETDATE()");
+                        .HasColumnType("timestamp without time zone")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                     b.Property<decimal>("MontoTotal")
                         .HasColumnType("decimal(12,2)");
@@ -249,7 +249,7 @@ namespace CarteraClientes.Infrastructure.Persistencia.Migrations
                     b.Property<string>("Observaciones")
                         .HasMaxLength(500)
                         .IsUnicode(false)
-                        .HasColumnType("varchar(500)");
+                        .HasColumnType("character varying(500)");
 
                     b.Property<decimal>("PrecioUnitario")
                         .HasColumnType("decimal(12,2)");
@@ -280,19 +280,19 @@ namespace CarteraClientes.Infrastructure.Persistencia.Migrations
             modelBuilder.Entity("CarteraClientes.Domain.Entities.VwCarteraClientes", b =>
                 {
                     b.Property<int>("Cantidad")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("ClienteId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<string>("Correo")
                         .IsUnicode(false)
-                        .HasColumnType("varchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("DescripcionProducto")
                         .IsRequired()
                         .IsUnicode(false)
-                        .HasColumnType("varchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<decimal>("DeudaInicial")
                         .HasColumnType("decimal(12,2)");
@@ -300,7 +300,7 @@ namespace CarteraClientes.Infrastructure.Persistencia.Migrations
                     b.Property<string>("Estatus")
                         .IsRequired()
                         .IsUnicode(false)
-                        .HasColumnType("varchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("FechaInicioDeuda")
                         .HasColumnType("date");
@@ -311,11 +311,11 @@ namespace CarteraClientes.Infrastructure.Persistencia.Migrations
                     b.Property<string>("NombreCliente")
                         .IsRequired()
                         .IsUnicode(false)
-                        .HasColumnType("varchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Observaciones")
                         .IsUnicode(false)
-                        .HasColumnType("varchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<decimal>("PrecioUnitario")
                         .HasColumnType("decimal(12,2)");
@@ -325,13 +325,13 @@ namespace CarteraClientes.Infrastructure.Persistencia.Migrations
 
                     b.Property<string>("Telefono")
                         .IsUnicode(false)
-                        .HasColumnType("varchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<decimal>("TotalPagado")
                         .HasColumnType("decimal(12,2)");
 
                     b.Property<int>("VentaId")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.ToTable((string)null);
 

@@ -48,8 +48,7 @@ public class VentaConfiguration : IEntityTypeConfiguration<Venta>
             .IsUnicode(false);
 
         builder.Property(v => v.FechaRegistro)
-            .HasColumnType("datetime")
-            .HasDefaultValueSql("GETDATE()");
+            .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
         builder.HasOne(v => v.Cliente)
             .WithMany(c => c.Ventas)

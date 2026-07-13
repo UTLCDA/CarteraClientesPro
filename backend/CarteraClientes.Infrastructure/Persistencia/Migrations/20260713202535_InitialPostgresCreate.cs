@@ -1,5 +1,6 @@
-﻿using System;
+using System;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
@@ -8,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace CarteraClientes.Infrastructure.Persistencia.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class InitialPostgresCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -17,16 +18,16 @@ namespace CarteraClientes.Infrastructure.Persistencia.Migrations
                 name: "Clientes",
                 columns: table => new
                 {
-                    ClienteId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Nombre = table.Column<string>(type: "varchar(100)", unicode: false, maxLength: 100, nullable: false),
-                    ApellidoPaterno = table.Column<string>(type: "varchar(80)", unicode: false, maxLength: 80, nullable: true),
-                    ApellidoMaterno = table.Column<string>(type: "varchar(80)", unicode: false, maxLength: 80, nullable: true),
-                    Telefono = table.Column<string>(type: "varchar(20)", unicode: false, maxLength: 20, nullable: true),
-                    Correo = table.Column<string>(type: "varchar(150)", unicode: false, maxLength: 150, nullable: true),
-                    Direccion = table.Column<string>(type: "varchar(250)", unicode: false, maxLength: 250, nullable: true),
-                    FechaRegistro = table.Column<DateTime>(type: "datetime", nullable: false, defaultValueSql: "GETDATE()"),
-                    Activo = table.Column<bool>(type: "bit", nullable: false, defaultValue: true)
+                    ClienteId = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Nombre = table.Column<string>(type: "character varying(100)", unicode: false, maxLength: 100, nullable: false),
+                    ApellidoPaterno = table.Column<string>(type: "character varying(80)", unicode: false, maxLength: 80, nullable: true),
+                    ApellidoMaterno = table.Column<string>(type: "character varying(80)", unicode: false, maxLength: 80, nullable: true),
+                    Telefono = table.Column<string>(type: "character varying(20)", unicode: false, maxLength: 20, nullable: true),
+                    Correo = table.Column<string>(type: "character varying(150)", unicode: false, maxLength: 150, nullable: true),
+                    Direccion = table.Column<string>(type: "character varying(250)", unicode: false, maxLength: 250, nullable: true),
+                    FechaRegistro = table.Column<DateTime>(type: "timestamp without time zone", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
+                    Activo = table.Column<bool>(type: "boolean", nullable: false, defaultValue: true)
                 },
                 constraints: table =>
                 {
@@ -37,18 +38,18 @@ namespace CarteraClientes.Infrastructure.Persistencia.Migrations
                 name: "Ventas",
                 columns: table => new
                 {
-                    VentaId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ClienteId = table.Column<int>(type: "int", nullable: false),
-                    DescripcionProducto = table.Column<string>(type: "varchar(250)", unicode: false, maxLength: 250, nullable: false),
-                    Cantidad = table.Column<int>(type: "int", nullable: false, defaultValue: 1),
-                    PrecioUnitario = table.Column<decimal>(type: "decimal(12,2)", nullable: false),
-                    MontoTotal = table.Column<decimal>(type: "decimal(12,2)", nullable: false),
+                    VentaId = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    ClienteId = table.Column<int>(type: "integer", nullable: false),
+                    DescripcionProducto = table.Column<string>(type: "character varying(250)", unicode: false, maxLength: 250, nullable: false),
+                    Cantidad = table.Column<int>(type: "integer", nullable: false, defaultValue: 1),
+                    PrecioUnitario = table.Column<decimal>(type: "numeric(12,2)", nullable: false),
+                    MontoTotal = table.Column<decimal>(type: "numeric(12,2)", nullable: false),
                     FechaInicioDeuda = table.Column<DateTime>(type: "date", nullable: false),
                     FechaLimitePago = table.Column<DateTime>(type: "date", nullable: true),
-                    Observaciones = table.Column<string>(type: "varchar(500)", unicode: false, maxLength: 500, nullable: true),
-                    Estatus = table.Column<string>(type: "varchar(20)", unicode: false, maxLength: 20, nullable: false, defaultValue: "PENDIENTE"),
-                    FechaRegistro = table.Column<DateTime>(type: "datetime", nullable: false, defaultValueSql: "GETDATE()")
+                    Observaciones = table.Column<string>(type: "character varying(500)", unicode: false, maxLength: 500, nullable: true),
+                    Estatus = table.Column<string>(type: "character varying(20)", unicode: false, maxLength: 20, nullable: false, defaultValue: "PENDIENTE"),
+                    FechaRegistro = table.Column<DateTime>(type: "timestamp without time zone", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP")
                 },
                 constraints: table =>
                 {
@@ -65,13 +66,13 @@ namespace CarteraClientes.Infrastructure.Persistencia.Migrations
                 name: "Movimientos",
                 columns: table => new
                 {
-                    MovimientoId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    VentaId = table.Column<int>(type: "int", nullable: false),
-                    TipoMovimiento = table.Column<string>(type: "varchar(20)", unicode: false, maxLength: 20, nullable: false),
-                    Monto = table.Column<decimal>(type: "decimal(12,2)", nullable: false),
-                    FechaMovimiento = table.Column<DateTime>(type: "datetime", nullable: false, defaultValueSql: "GETDATE()"),
-                    Descripcion = table.Column<string>(type: "varchar(250)", unicode: false, maxLength: 250, nullable: true)
+                    MovimientoId = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    VentaId = table.Column<int>(type: "integer", nullable: false),
+                    TipoMovimiento = table.Column<string>(type: "character varying(20)", unicode: false, maxLength: 20, nullable: false),
+                    Monto = table.Column<decimal>(type: "numeric(12,2)", nullable: false),
+                    FechaMovimiento = table.Column<DateTime>(type: "timestamp without time zone", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
+                    Descripcion = table.Column<string>(type: "character varying(250)", unicode: false, maxLength: 250, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -88,14 +89,14 @@ namespace CarteraClientes.Infrastructure.Persistencia.Migrations
                 name: "Pagos",
                 columns: table => new
                 {
-                    PagoId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    VentaId = table.Column<int>(type: "int", nullable: false),
-                    MontoPago = table.Column<decimal>(type: "decimal(12,2)", nullable: false),
-                    FechaPago = table.Column<DateTime>(type: "datetime", nullable: false, defaultValueSql: "GETDATE()"),
-                    FormaPago = table.Column<string>(type: "varchar(30)", unicode: false, maxLength: 30, nullable: true),
-                    Referencia = table.Column<string>(type: "varchar(100)", unicode: false, maxLength: 100, nullable: true),
-                    Observaciones = table.Column<string>(type: "varchar(250)", unicode: false, maxLength: 250, nullable: true)
+                    PagoId = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    VentaId = table.Column<int>(type: "integer", nullable: false),
+                    MontoPago = table.Column<decimal>(type: "numeric(12,2)", nullable: false),
+                    FechaPago = table.Column<DateTime>(type: "timestamp without time zone", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
+                    FormaPago = table.Column<string>(type: "character varying(30)", unicode: false, maxLength: 30, nullable: true),
+                    Referencia = table.Column<string>(type: "character varying(100)", unicode: false, maxLength: 100, nullable: true),
+                    Observaciones = table.Column<string>(type: "character varying(250)", unicode: false, maxLength: 250, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -146,11 +147,47 @@ namespace CarteraClientes.Infrastructure.Persistencia.Migrations
                 name: "IX_Ventas_ClienteId",
                 table: "Ventas",
                 column: "ClienteId");
+
+            // Custom raw SQL to create PostgreSQL View
+            migrationBuilder.Sql(@"
+CREATE OR REPLACE VIEW ""Vw_CarteraClientes"" AS
+SELECT
+    v.""VentaId"",
+    c.""ClienteId"",
+    TRIM(CONCAT(
+        c.""Nombre"", ' ',
+        COALESCE(c.""ApellidoPaterno"", ''), ' ',
+        COALESCE(c.""ApellidoMaterno"", '')
+    )) AS ""NombreCliente"",
+    c.""Telefono"",
+    c.""Correo"",
+    v.""DescripcionProducto"",
+    v.""Cantidad"",
+    v.""PrecioUnitario"",
+    v.""MontoTotal"" AS ""DeudaInicial"",
+    v.""FechaInicioDeuda"",
+    v.""FechaLimitePago"",
+    COALESCE(p.""TotalPagado"", 0) AS ""TotalPagado"",
+    (v.""MontoTotal"" - COALESCE(p.""TotalPagado"", 0)) AS ""SaldoPendiente"",
+    v.""Estatus"",
+    v.""Observaciones""
+FROM ""Ventas"" v
+INNER JOIN ""Clientes"" c ON c.""ClienteId"" = v.""ClienteId""
+LEFT JOIN (
+    SELECT
+        ""VentaId"",
+        SUM(""MontoPago"") AS ""TotalPagado""
+    FROM ""Pagos""
+    GROUP BY ""VentaId""
+) p ON p.""VentaId"" = v.""VentaId"";
+");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.Sql("DROP VIEW IF EXISTS \"Vw_CarteraClientes\";");
+
             migrationBuilder.DropTable(
                 name: "Movimientos");
 

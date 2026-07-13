@@ -16,8 +16,7 @@ public class PagoConfiguration : IEntityTypeConfiguration<Pago>
             .HasColumnType("decimal(12,2)");
 
         builder.Property(p => p.FechaPago)
-            .HasColumnType("datetime")
-            .HasDefaultValueSql("GETDATE()");
+            .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
         builder.Property(p => p.FormaPago)
             .HasMaxLength(30)

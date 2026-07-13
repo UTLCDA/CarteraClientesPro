@@ -9,6 +9,7 @@ public class CarteraClientesDbContext : DbContext
     public CarteraClientesDbContext(DbContextOptions<CarteraClientesDbContext> options)
         : base(options)
     {
+        AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
     }
 
     public DbSet<Cliente> Clientes => Set<Cliente>();

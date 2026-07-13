@@ -10,9 +10,9 @@ using CarteraClientes.Application.Validators;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Configurar DbContext con la cadena de conexión de SQL Server
+// Configurar DbContext con la cadena de conexión de PostgreSQL
 builder.Services.AddDbContext<CarteraClientesDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Registrar Repositorios y Unit of Work
 builder.Services.AddScoped<IClienteRepository, ClienteRepository>();

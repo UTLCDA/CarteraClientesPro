@@ -38,8 +38,7 @@ public class ClienteConfiguration : IEntityTypeConfiguration<Cliente>
             .IsUnicode(false);
 
         builder.Property(c => c.FechaRegistro)
-            .HasColumnType("datetime")
-            .HasDefaultValueSql("GETDATE()");
+            .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
         builder.Property(c => c.Activo)
             .HasDefaultValue(true);

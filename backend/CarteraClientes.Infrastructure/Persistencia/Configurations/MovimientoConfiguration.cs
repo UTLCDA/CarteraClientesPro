@@ -26,8 +26,7 @@ public class MovimientoConfiguration : IEntityTypeConfiguration<Movimiento>
             .HasColumnType("decimal(12,2)");
 
         builder.Property(m => m.FechaMovimiento)
-            .HasColumnType("datetime")
-            .HasDefaultValueSql("GETDATE()");
+            .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
         builder.Property(m => m.Descripcion)
             .HasMaxLength(250)
