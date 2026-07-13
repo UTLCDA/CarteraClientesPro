@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="CarteraClientes.Domain\CarteraClientes.Domain.csproj" />
+  <Project Path="CarteraClientes.Application\CarteraClientes.Application.csproj" />
+  <Project Path="CarteraClientes.Infrastructure\CarteraClientes.Infrastructure.csproj" />
+  <Project Path="CarteraClientes.API\CarteraClientes.API.csproj" />
+</Solution>
