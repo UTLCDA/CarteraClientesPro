@@ -22,12 +22,15 @@ public class ClienteRepository : IClienteRepository
     {
         return await _dbContext.Clientes
             .Include(c => c.Ventas)
+                .ThenInclude(v => v.Pagos)
             .FirstOrDefaultAsync(c => c.ClienteId == id, cancellationToken);
     }
 
     public async Task<IEnumerable<Cliente>> GetAllAsync(CancellationToken cancellationToken = default)
     {
         return await _dbContext.Clientes
+            .Include(c => c.Ventas)
+                .ThenInclude(v => v.Pagos)
             .OrderByDescending(c => c.FechaRegistro)
             .ToListAsync(cancellationToken);
     }
@@ -47,6 +50,8 @@ public class ClienteRepository : IClienteRepository
                         (c.ApellidoMaterno != null && c.ApellidoMaterno.ToLower().Contains(query)) ||
                         (c.Telefono != null && c.Telefono.Contains(query)) ||
                         (c.Correo != null && c.Correo.ToLower().Contains(query)))
+            .Include(c => c.Ventas)
+                .ThenInclude(v => v.Pagos)
             .OrderByDescending(c => c.FechaRegistro)
             .ToListAsync(cancellationToken);
     }

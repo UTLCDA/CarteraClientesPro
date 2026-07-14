@@ -184,7 +184,7 @@ const Dashboard: React.FC = () => {
               <Typography color="text.secondary">No hay ventas registradas.</Typography>
             </Box>
           ) : (
-            <TableContainer sx={{ maxHeight: 350 }}>
+            <TableContainer sx={{ maxHeight: 350, border: '1px solid', borderColor: 'divider', borderRadius: '16px', overflowX: 'auto' }}>
               <Table stickyHeader size="small" sx={{ minWidth: { xs: 550, md: '100%' } }}>
                 <TableHead>
                   <TableRow>
@@ -308,7 +308,7 @@ const Dashboard: React.FC = () => {
             <Typography color="text.secondary">No hay abonos registrados.</Typography>
           </Box>
         ) : (
-          <TableContainer sx={{ maxHeight: 350 }}>
+          <TableContainer sx={{ maxHeight: 350, border: '1px solid', borderColor: 'divider', borderRadius: '16px', overflowX: 'auto' }}>
             <Table stickyHeader size="small" sx={{ minWidth: { xs: 650, md: '100%' } }}>
               <TableHead>
                 <TableRow>

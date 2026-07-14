@@ -31,6 +31,7 @@ public class VentaRepository : IVentaRepository
     {
         return await _dbContext.Ventas
             .Include(v => v.Cliente)
+            .Include(v => v.Pagos)
             .OrderByDescending(v => v.FechaInicioDeuda)
             .ToListAsync(cancellationToken);
     }
@@ -40,6 +41,7 @@ public class VentaRepository : IVentaRepository
         return await _dbContext.Ventas
             .Where(v => v.ClienteId == clienteId)
             .Include(v => v.Cliente)
+            .Include(v => v.Pagos)
             .OrderByDescending(v => v.FechaInicioDeuda)
             .ToListAsync(cancellationToken);
     }
@@ -49,6 +51,7 @@ public class VentaRepository : IVentaRepository
         return await _dbContext.Ventas
             .Where(v => v.Estatus == Domain.Enums.EstatusVenta.PENDIENTE)
             .Include(v => v.Cliente)
+            .Include(v => v.Pagos)
             .OrderByDescending(v => v.FechaInicioDeuda)
             .ToListAsync(cancellationToken);
     }

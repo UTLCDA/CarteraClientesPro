@@ -13,6 +13,7 @@ import {
   CircularProgress,
   Alert,
   InputAdornment,
+  Autocomplete,
 } from '@mui/material';
 import { Save as SaveIcon, ArrowBack as ArrowBackIcon } from '@mui/icons-material';
 import { useCreatePago, useVentasPendientes, useVenta } from '../hooks/useQueries';
@@ -151,7 +152,7 @@ const PagoFormPage: React.FC = () => {
                   <TextField
                     label="Venta a Crédito Seleccionada"
                     fullWidth
-                    value={`Venta #${queryVentaId} - ${selectedVentaDetails}`}
+                    value={`${selectedVentaDetails}`}
                     disabled
                   />
                 ) : (
@@ -159,22 +160,26 @@ const PagoFormPage: React.FC = () => {
                     name="ventaId"
                     control={control}
                     render={({ field }) => (
-                      <TextField
-                        {...field}
-                        select
-                        label="Seleccione la Venta Pendiente *"
+                      <Autocomplete
+                        options={ventasPendientes || []}
+                        getOptionLabel={(option) => 
+                          `${option.nombreCliente} - ${option.descripcionProducto} (${formatCurrency(option.saldoPendiente)} pend.)`
+                        }
+                        value={ventasPendientes?.find(v => v.ventaId === field.value) || null}
+                        onChange={(_, newValue) => {
+                          field.onChange(newValue ? newValue.ventaId : undefined);
+                        }}
+                        renderInput={(params) => (
+                          <TextField
+                            {...params}
+                            label="Seleccione la Venta Pendiente *"
+                            error={!!errors.ventaId}
+                            helperText={errors.ventaId?.message}
+                            required
+                          />
+                        )}
                         fullWidth
-                        error={!!errors.ventaId}
-                        helperText={errors.ventaId?.message}
-                        onChange={(e) => field.onChange(parseInt(e.target.value))}
-                      >
-                        <MenuItem value="">Seleccione una venta pendiente</MenuItem>
-                        {ventasPendientes?.map((v) => (
-                          <MenuItem key={v.ventaId} value={v.ventaId}>
-                            {`Venta #${v.ventaId} | ${v.nombreCliente} - ${v.descripcionProducto} (${formatCurrency(v.saldoPendiente)} pend.)`}
-                          </MenuItem>
-                        ))}
-                      </TextField>
+                      />
                     )}
                   />
                 )}

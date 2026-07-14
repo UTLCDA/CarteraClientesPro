@@ -333,7 +333,7 @@ const VentaDetailPage: React.FC = () => {
               No se han registrado pagos para esta venta.
             </Typography>
           ) : (
-            <TableContainer>
+            <TableContainer sx={{ border: '1px solid', borderColor: 'divider', borderRadius: '12px', overflowX: 'auto' }}>
               <Table size="small">
                 <TableHead>
                   <TableRow>
@@ -375,7 +375,7 @@ const VentaDetailPage: React.FC = () => {
               No hay movimientos de auditoría registrados.
             </Typography>
           ) : (
-            <TableContainer>
+            <TableContainer sx={{ border: '1px solid', borderColor: 'divider', borderRadius: '12px', overflowX: 'auto' }}>
               <Table size="small">
                 <TableHead>
                   <TableRow>

@@ -73,7 +73,7 @@ const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
             letterSpacing: '0.5px'
           }}
         >
-          <WomanIcon sx={{ fontSize: '28px' }} /> Credi rox
+          <WomanIcon sx={{ fontSize: '28px' }} /> CREDIROX
         </Typography>
       </Toolbar>
       <Divider />

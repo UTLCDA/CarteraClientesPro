@@ -284,7 +284,7 @@ const ClienteDetailPage: React.FC = () => {
             </Button>
           </Box>
         ) : (
-          <TableContainer>
+          <TableContainer sx={{ border: '1px solid', borderColor: 'divider', borderRadius: '12px', overflowX: 'auto' }}>
             <Table size="small">
               <TableHead>
                 <TableRow>
