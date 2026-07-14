@@ -43,9 +43,9 @@ public class RecordatorioService : IRecordatorioService
         return MapToDto(recordatorio);
     }
 
-    public async Task<IEnumerable<RecordatorioDto>> GetByFiltrosAsync(string? estatus, string? canal, DateTime? fechaDesde, CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<RecordatorioDto>> GetByFiltrosAsync(int? clienteId, string? estatus, string? canal, DateTime? fechaDesde, CancellationToken cancellationToken = default)
     {
-        var recordatorios = await _recordatorioRepository.GetByFiltrosAsync(estatus, canal, fechaDesde, cancellationToken);
+        var recordatorios = await _recordatorioRepository.GetByFiltrosAsync(clienteId, estatus, canal, fechaDesde, cancellationToken);
         return recordatorios.Select(MapToDto);
     }
 
@@ -67,6 +67,7 @@ public class RecordatorioService : IRecordatorioService
         // 2. Fetch reminders created in the last 6 days to prevent duplicates
         var fechaReciente = DateTime.Today.AddDays(-6);
         var recordatoriosRecientes = await _recordatorioRepository.GetByFiltrosAsync(
+            clienteId: null,
             estatus: null,
             canal: null,
             fechaDesde: fechaReciente,
@@ -235,6 +236,7 @@ public class RecordatorioService : IRecordatorioService
             DescripcionProducto = r.Venta.DescripcionProducto,
             Mensaje = r.Mensaje,
             FechaCreacion = r.FechaCreacion,
+            FechaProgramada = r.FechaProgramada,
             FechaEnvio = r.FechaEnvio,
             Estatus = r.Estatus,
             Canal = r.Canal

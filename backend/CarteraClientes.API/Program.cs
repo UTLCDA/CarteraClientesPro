@@ -7,6 +7,7 @@ using CarteraClientes.Infrastructure.Persistencia;
 using CarteraClientes.Infrastructure.Repositories;
 using CarteraClientes.Application.Services;
 using CarteraClientes.Application.Validators;
+using CarteraClientes.API.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +23,7 @@ builder.Services.AddScoped<IPagoRepository, PagoRepository>();
 builder.Services.AddScoped<IMovimientoRepository, MovimientoRepository>();
 builder.Services.AddScoped<IDashboardRepository, DashboardRepository>();
 builder.Services.AddScoped<IRecordatorioRepository, RecordatorioRepository>();
+builder.Services.AddScoped<IProgramacionRecordatorioRepository, ProgramacionRecordatorioRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 // Registrar Servicios de Aplicación
@@ -31,6 +33,10 @@ builder.Services.AddScoped<IPagoService, PagoService>();
 builder.Services.AddScoped<IMovimientoService, MovimientoService>();
 builder.Services.AddScoped<IDashboardService, DashboardService>();
 builder.Services.AddScoped<IRecordatorioService, RecordatorioService>();
+builder.Services.AddScoped<IProgramacionRecordatorioService, ProgramacionRecordatorioService>();
+
+// Registrar Hosted Services (Background Workers)
+builder.Services.AddHostedService<RecordatorioBackgroundWorker>();
 
 // Registrar Validadores de FluentValidation
 builder.Services.AddValidatorsFromAssembly(typeof(ClienteCreateUpdateDtoValidator).Assembly);

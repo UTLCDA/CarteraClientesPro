@@ -21,12 +21,13 @@ public class RecordatoriosController : ControllerBase
 
     [HttpGet]
     public async Task<ActionResult<IEnumerable<RecordatorioDto>>> GetByFiltros(
+        [FromQuery] int? clienteId,
         [FromQuery] string? estatus,
         [FromQuery] string? canal,
         [FromQuery] DateTime? fechaDesde,
         CancellationToken cancellationToken)
     {
-        var recordatorios = await _recordatorioService.GetByFiltrosAsync(estatus, canal, fechaDesde, cancellationToken);
+        var recordatorios = await _recordatorioService.GetByFiltrosAsync(clienteId, estatus, canal, fechaDesde, cancellationToken);
         return Ok(recordatorios);
     }
 

@@ -292,6 +292,7 @@ export const useRegistrarAjuste = () => {
 // RECORDATORIOS
 // ==========================================
 export interface RecordatoriosFilters {
+  clienteId?: number | string;
   estatus?: string;
   canal?: string;
   fechaDesde?: string;
@@ -302,6 +303,7 @@ export const useRecordatorios = (filters: RecordatoriosFilters = {}) => {
     queryKey: ['recordatorios', filters],
     queryFn: async () => {
       const params = new URLSearchParams();
+      if (filters.clienteId) params.append('clienteId', filters.clienteId.toString());
       if (filters.estatus) params.append('estatus', filters.estatus);
       if (filters.canal) params.append('canal', filters.canal);
       if (filters.fechaDesde) params.append('fechaDesde', filters.fechaDesde);
@@ -346,6 +348,82 @@ export const useMarcarRecordatorioEnviado = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['recordatorios'] });
+    },
+  });
+};
+
+// ==========================================
+// PROGRAMACION RECORDATORIOS
+// ==========================================
+export const useProgramacionesRecordatorios = () => {
+  return useQuery<T.ProgramacionRecordatorio[]>({
+    queryKey: ['programacionesRecordatorios'],
+    queryFn: async () => {
+      const response = await apiClient.get<T.ProgramacionRecordatorio[]>('/programacionesrecordatorios');
+      return response.data;
+    },
+  });
+};
+
+export const useProgramacionesRecordatoriosByCliente = (clienteId: number) => {
+  return useQuery<T.ProgramacionRecordatorio[]>({
+    queryKey: ['programacionesRecordatorios', clienteId],
+    queryFn: async () => {
+      const response = await apiClient.get<T.ProgramacionRecordatorio[]>(`/programacionesrecordatorios/cliente/${clienteId}`);
+      return response.data;
+    },
+    enabled: clienteId > 0,
+  });
+};
+
+export const useCreateProgramacionRecordatorio = () => {
+  const queryClient = useQueryClient();
+  return useMutation<T.ProgramacionRecordatorio, Error, T.ProgramacionRecordatorioCreateUpdate>({
+    mutationFn: async (newProg) => {
+      const response = await apiClient.post<T.ProgramacionRecordatorio>('/programacionesrecordatorios', newProg);
+      return response.data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['programacionesRecordatorios'] });
+    },
+  });
+};
+
+export const useUpdateProgramacionRecordatorio = (id: number) => {
+  const queryClient = useQueryClient();
+  return useMutation<T.ProgramacionRecordatorio, Error, T.ProgramacionRecordatorioCreateUpdate>({
+    mutationFn: async (updatedProg) => {
+      const response = await apiClient.put<T.ProgramacionRecordatorio>(`/programacionesrecordatorios/${id}`, updatedProg);
+      return response.data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['programacionesRecordatorios'] });
+    },
+  });
+};
+
+export const useDeleteProgramacionRecordatorio = () => {
+  const queryClient = useQueryClient();
+  return useMutation<void, Error, number>({
+    mutationFn: async (id) => {
+      await apiClient.delete(`/programacionesrecordatorios/${id}`);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['programacionesRecordatorios'] });
+    },
+  });
+};
+
+export const useToggleProgramacionRecordatorioActivo = () => {
+  const queryClient = useQueryClient();
+  return useMutation<void, Error, { id: number; activo: boolean }>({
+    mutationFn: async ({ id, activo }) => {
+      await apiClient.patch(`/programacionesrecordatorios/${id}/activo`, activo, {
+        headers: { 'Content-Type': 'application/json' },
+      });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['programacionesRecordatorios'] });
     },
   });
 };

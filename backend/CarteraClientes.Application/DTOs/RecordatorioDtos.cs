@@ -13,6 +13,7 @@ public class RecordatorioDto
     public string DescripcionProducto { get; set; } = string.Empty;
     public string Mensaje { get; set; } = string.Empty;
     public DateTime FechaCreacion { get; set; }
+    public DateTime? FechaProgramada { get; set; }
     public DateTime? FechaEnvio { get; set; }
     public string Estatus { get; set; } = string.Empty;
     public string Canal { get; set; } = string.Empty;

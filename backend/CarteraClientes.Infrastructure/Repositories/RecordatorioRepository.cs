@@ -36,12 +36,17 @@ public class RecordatorioRepository : IRecordatorioRepository
             .ToListAsync(cancellationToken);
     }
 
-    public async Task<IEnumerable<Recordatorio>> GetByFiltrosAsync(string? estatus, string? canal, DateTime? fechaDesde, CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<Recordatorio>> GetByFiltrosAsync(int? clienteId, string? estatus, string? canal, DateTime? fechaDesde, CancellationToken cancellationToken = default)
     {
         var query = _dbContext.Recordatorios
             .Include(r => r.Cliente)
             .Include(r => r.Venta)
             .AsQueryable();
+
+        if (clienteId.HasValue)
+        {
+            query = query.Where(r => r.ClienteId == clienteId.Value);
+        }
 
         if (!string.IsNullOrWhiteSpace(estatus))
         {

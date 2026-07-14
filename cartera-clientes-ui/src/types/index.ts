@@ -114,6 +114,7 @@ export interface Recordatorio {
   descripcionProducto: string;
   mensaje: string;
   fechaCreacion: string;
+  fechaProgramada?: string;
   fechaEnvio?: string;
   estatus: 'PENDIENTE' | 'ENVIADO' | 'FALLIDO';
   canal: 'WHATSAPP' | 'CORREO' | 'AMBOS';
@@ -122,4 +123,32 @@ export interface Recordatorio {
 export interface RecordatorioGenerarResult {
   totalGenerados: number;
   totalSaltados: number;
+}
+
+export interface ProgramacionRecordatorio {
+  programacionRecordatorioId: number;
+  clienteId: number;
+  nombreCliente: string;
+  ventaId: number;
+  descripcionProducto: string;
+  tipoCanal: 'WHATSAPP' | 'CORREO' | 'AMBOS';
+  frecuencia: 'UNICA' | 'DIARIA' | 'SEMANAL';
+  diaSemana?: string;
+  horaEjecucion: string;
+  fechaHoraEjecucion?: string;
+  activo: boolean;
+  mensajePersonalizado?: string;
+  fechaUltimaEjecucion?: string;
+}
+
+export interface ProgramacionRecordatorioCreateUpdate {
+  clienteId: number;
+  ventaId: number;
+  tipoCanal: 'WHATSAPP' | 'CORREO' | 'AMBOS';
+  frecuencia: 'UNICA' | 'DIARIA' | 'SEMANAL';
+  diaSemana?: string;
+  horaEjecucion: string;
+  fechaHoraEjecucion?: string;
+  activo: boolean;
+  mensajePersonalizado?: string;
 }
