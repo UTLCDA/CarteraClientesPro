@@ -17,4 +17,5 @@ public class Cliente
 
     // Navigation properties
     public ICollection<Venta> Ventas { get; set; } = new List<Venta>();
+    public ICollection<Recordatorio> Recordatorios { get; set; } = new List<Recordatorio>();
 }

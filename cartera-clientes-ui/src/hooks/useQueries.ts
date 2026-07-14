@@ -287,3 +287,65 @@ export const useRegistrarAjuste = () => {
     },
   });
 };
+
+// ==========================================
+// RECORDATORIOS
+// ==========================================
+export interface RecordatoriosFilters {
+  estatus?: string;
+  canal?: string;
+  fechaDesde?: string;
+}
+
+export const useRecordatorios = (filters: RecordatoriosFilters = {}) => {
+  return useQuery<T.Recordatorio[]>({
+    queryKey: ['recordatorios', filters],
+    queryFn: async () => {
+      const params = new URLSearchParams();
+      if (filters.estatus) params.append('estatus', filters.estatus);
+      if (filters.canal) params.append('canal', filters.canal);
+      if (filters.fechaDesde) params.append('fechaDesde', filters.fechaDesde);
+
+      const response = await apiClient.get<T.Recordatorio[]>(`/recordatorios?${params.toString()}`);
+      return response.data;
+    },
+  });
+};
+
+export const useGenerarRecordatorios = () => {
+  const queryClient = useQueryClient();
+  return useMutation<T.RecordatorioGenerarResult, Error, void>({
+    mutationFn: async () => {
+      const response = await apiClient.post<T.RecordatorioGenerarResult>('/recordatorios/generar');
+      return response.data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['recordatorios'] });
+    },
+  });
+};
+
+export const useEnviarRecordatorioCorreo = () => {
+  const queryClient = useQueryClient();
+  return useMutation<{ mensaje: string }, Error, number>({
+    mutationFn: async (id) => {
+      const response = await apiClient.post<{ mensaje: string }>(`/recordatorios/${id}/enviar-correo`);
+      return response.data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['recordatorios'] });
+    },
+  });
+};
+
+export const useMarcarRecordatorioEnviado = () => {
+  const queryClient = useQueryClient();
+  return useMutation<void, Error, number>({
+    mutationFn: async (id) => {
+      await apiClient.put(`/recordatorios/${id}/marcar-enviado`);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['recordatorios'] });
+    },
+  });
+};

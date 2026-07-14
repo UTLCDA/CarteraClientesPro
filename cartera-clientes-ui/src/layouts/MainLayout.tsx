@@ -21,6 +21,7 @@ import {
   People as PeopleIcon,
   ReceiptLong as ReceiptIcon,
   Payments as PaymentsIcon,
+  NotificationsActive as RemindersIcon,
 } from '@mui/icons-material';
 
 const drawerWidth = 240;
@@ -39,6 +40,7 @@ const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     { text: 'Clientes', icon: <PeopleIcon />, path: '/clientes' },
     { text: 'Ventas', icon: <ReceiptIcon />, path: '/ventas' },
     { text: 'Pagos', icon: <PaymentsIcon />, path: '/pagos' },
+    { text: 'Recordatorios', icon: <RemindersIcon />, path: '/recordatorios' },
   ];
 
   // Helper to determine active route
@@ -48,6 +50,7 @@ const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     if (path.startsWith('/clientes')) return 'Clientes';
     if (path.startsWith('/ventas')) return 'Ventas';
     if (path.startsWith('/pagos')) return 'Pagos';
+    if (path.startsWith('/recordatorios')) return 'Recordatorios';
     return 'Dashboard';
   };
 

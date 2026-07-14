@@ -1,12 +1,15 @@
 {
   "version": 2,
-  "dgSpecHash": "kXLx3WfzQ1s=",
+  "dgSpecHash": "phSzj34EYmQ=",
   "success": true,
   "projectFilePath": "D:\\app_carteraClientes\\backend\\CarteraClientes.Application\\CarteraClientes.Application.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Aaron Arenas Mtz\\.nuget\\packages\\fluentvalidation\\12.1.1\\fluentvalidation.12.1.1.nupkg.sha512",
     "C:\\Users\\Aaron Arenas Mtz\\.nuget\\packages\\fluentvalidation.dependencyinjectionextensions\\12.1.1\\fluentvalidation.dependencyinjectionextensions.12.1.1.nupkg.sha512",
-    "C:\\Users\\Aaron Arenas Mtz\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\2.1.0\\microsoft.extensions.dependencyinjection.abstractions.2.1.0.nupkg.sha512"
+    "C:\\Users\\Aaron Arenas Mtz\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\9.0.2\\microsoft.extensions.configuration.abstractions.9.0.2.nupkg.sha512",
+    "C:\\Users\\Aaron Arenas Mtz\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\9.0.2\\microsoft.extensions.dependencyinjection.abstractions.9.0.2.nupkg.sha512",
+    "C:\\Users\\Aaron Arenas Mtz\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\9.0.2\\microsoft.extensions.logging.abstractions.9.0.2.nupkg.sha512",
+    "C:\\Users\\Aaron Arenas Mtz\\.nuget\\packages\\microsoft.extensions.primitives\\9.0.2\\microsoft.extensions.primitives.9.0.2.nupkg.sha512"
   ],
   "logs": []
 }

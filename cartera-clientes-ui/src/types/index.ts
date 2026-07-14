@@ -103,3 +103,23 @@ export interface DashboardResumen {
   pagosRecientes: Pago[];
   clientesMayorSaldo: Cliente[];
 }
+
+export interface Recordatorio {
+  recordatorioId: number;
+  clienteId: number;
+  nombreCliente: string;
+  telefonoCliente: string;
+  correoCliente: string;
+  ventaId: number;
+  descripcionProducto: string;
+  mensaje: string;
+  fechaCreacion: string;
+  fechaEnvio?: string;
+  estatus: 'PENDIENTE' | 'ENVIADO' | 'FALLIDO';
+  canal: 'WHATSAPP' | 'CORREO' | 'AMBOS';
+}
+
+export interface RecordatorioGenerarResult {
+  totalGenerados: number;
+  totalSaltados: number;
+}

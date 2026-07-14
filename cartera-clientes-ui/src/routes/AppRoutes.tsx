@@ -9,6 +9,7 @@ import VentaFormPage from '../pages/VentaFormPage';
 import VentaDetailPage from '../pages/VentaDetailPage';
 import PagosList from '../pages/PagosList';
 import PagoFormPage from '../pages/PagoFormPage';
+import RecordatoriosList from '../pages/RecordatoriosList';
 
 const AppRoutes: React.FC = () => {
   return (
@@ -23,6 +24,7 @@ const AppRoutes: React.FC = () => {
       <Route path="/ventas/:id" element={<VentaDetailPage />} />
       <Route path="/pagos" element={<PagosList />} />
       <Route path="/pagos/nuevo" element={<PagoFormPage />} />
+      <Route path="/recordatorios" element={<RecordatoriosList />} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );

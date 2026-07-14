@@ -21,6 +21,7 @@ builder.Services.AddScoped<IVwCarteraClientesRepository, VwCarteraClientesReposi
 builder.Services.AddScoped<IPagoRepository, PagoRepository>();
 builder.Services.AddScoped<IMovimientoRepository, MovimientoRepository>();
 builder.Services.AddScoped<IDashboardRepository, DashboardRepository>();
+builder.Services.AddScoped<IRecordatorioRepository, RecordatorioRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 // Registrar Servicios de Aplicación
@@ -29,6 +30,7 @@ builder.Services.AddScoped<IVentaService, VentaService>();
 builder.Services.AddScoped<IPagoService, PagoService>();
 builder.Services.AddScoped<IMovimientoService, MovimientoService>();
 builder.Services.AddScoped<IDashboardService, DashboardService>();
+builder.Services.AddScoped<IRecordatorioService, RecordatorioService>();
 
 // Registrar Validadores de FluentValidation
 builder.Services.AddValidatorsFromAssembly(typeof(ClienteCreateUpdateDtoValidator).Assembly);
@@ -74,5 +76,21 @@ app.UseCors("AllowFrontend");
 app.UseAuthorization();
 
 app.MapControllers();
+
+// Aplicar migraciones pendientes automáticamente al iniciar la app
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    try
+    {
+        var context = services.GetRequiredService<CarteraClientesDbContext>();
+        context.Database.Migrate();
+    }
+    catch (Exception ex)
+    {
+        var logger = services.GetRequiredService<ILogger<Program>>();
+        logger.LogError(ex, "Ocurrió un error al aplicar las migraciones en el arranque.");
+    }
+}
 
 app.Run();

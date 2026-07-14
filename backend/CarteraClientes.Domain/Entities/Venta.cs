@@ -22,4 +22,5 @@ public class Venta
     public Cliente? Cliente { get; set; }
     public ICollection<Pago> Pagos { get; set; } = new List<Pago>();
     public ICollection<Movimiento> Movimientos { get; set; } = new List<Movimiento>();
+    public ICollection<Recordatorio> Recordatorios { get; set; } = new List<Recordatorio>();
 }

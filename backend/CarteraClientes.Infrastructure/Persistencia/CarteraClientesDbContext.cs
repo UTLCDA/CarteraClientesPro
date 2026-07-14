@@ -16,6 +16,7 @@ public class CarteraClientesDbContext : DbContext
     public DbSet<Venta> Ventas => Set<Venta>();
     public DbSet<Pago> Pagos => Set<Pago>();
     public DbSet<Movimiento> Movimientos => Set<Movimiento>();
+    public DbSet<Recordatorio> Recordatorios => Set<Recordatorio>();
     public DbSet<VwCarteraClientes> VwCarteraClientes => Set<VwCarteraClientes>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -26,6 +27,7 @@ public class CarteraClientesDbContext : DbContext
         modelBuilder.ApplyConfiguration(new VentaConfiguration());
         modelBuilder.ApplyConfiguration(new PagoConfiguration());
         modelBuilder.ApplyConfiguration(new MovimientoConfiguration());
+        modelBuilder.ApplyConfiguration(new RecordatorioConfiguration());
         modelBuilder.ApplyConfiguration(new VwCarteraClientesConfiguration());
 
         // Semillero de datos (Seed Data)
