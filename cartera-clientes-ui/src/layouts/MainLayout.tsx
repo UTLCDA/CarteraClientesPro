@@ -22,6 +22,7 @@ import {
   ReceiptLong as ReceiptIcon,
   Payments as PaymentsIcon,
   NotificationsActive as RemindersIcon,
+  Woman as WomanIcon,
 } from '@mui/icons-material';
 
 const drawerWidth = 240;
@@ -72,7 +73,7 @@ const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
             letterSpacing: '0.5px'
           }}
         >
-          <PaymentsIcon sx={{ fontSize: '28px' }} /> CARTERAPRO
+          <WomanIcon sx={{ fontSize: '28px' }} /> Credi rox
         </Typography>
       </Toolbar>
       <Divider />
